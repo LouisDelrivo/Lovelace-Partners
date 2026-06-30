@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Scroll reveal ---------- */
   const revealTargets = document.querySelectorAll(
-    '.about-lead, .about-pillars .pillar, .timeline-item, .case, .logo-card, .contact-text, .contact-form, .quote-inner'
+    '.about-lead, .about-pillars .pillar, .timeline-item, .case, .logo-card, .contact-text, .contact-form, .quote-inner, .story-intro'
   );
   revealTargets.forEach(el => el.classList.add('reveal'));
 
@@ -73,16 +73,33 @@ document.addEventListener('DOMContentLoaded', () => {
     statNums.forEach(el => statIo.observe(el));
   }
 
-  /* ---------- Contact form (demo submission, no backend) ---------- */
+  /* ---------- Contact form (Web3Forms) ---------- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
-  form.addEventListener('submit', (e) => {
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.textContent = 'Envoi en cours…';
-    setTimeout(() => {
-      status.textContent = 'Demande envoyée. Nous revenons vers vous sous 48h.';
-      form.reset();
-    }, 700);
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData,
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        status.textContent = 'Demande envoyée. Nous revenons vers vous sous 48h.';
+        form.reset();
+      } else {
+        status.textContent = "Une erreur s'est produite. Réessayez ou écrivez-nous directement.";
+      }
+    } catch (error) {
+      status.textContent = "Une erreur s'est produite. Réessayez ou écrivez-nous directement.";
+    }
   });
 
 });
