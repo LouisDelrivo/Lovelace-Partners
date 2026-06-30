@@ -46,7 +46,6 @@ a { color: inherit; text-decoration: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* subtle film-grain overlay for texture, very low opacity */
 .noise-overlay {
   position: fixed; inset: 0; pointer-events: none; z-index: 9999;
   opacity: 0.025; mix-blend-mode: overlay;
