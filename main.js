@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
   /* ---------- Sticky nav background on scroll ---------- */
   const nav = document.getElementById('nav');
   const onScroll = () => {
@@ -8,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
-
   /* ---------- Mobile nav toggle ---------- */
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.querySelector('.nav-links');
@@ -22,13 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
       navToggle.setAttribute('aria-expanded', 'false');
     });
   });
-
   /* ---------- Scroll reveal ---------- */
   const revealTargets = document.querySelectorAll(
     '.about-lead, .about-pillars .pillar, .timeline-item, .case, .logo-card, .contact-text, .contact-form, .quote-inner, .story-intro'
   );
   revealTargets.forEach(el => el.classList.add('reveal'));
-
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) {
     revealTargets.forEach(el => el.classList.add('is-visible'));
@@ -43,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
     revealTargets.forEach(el => io.observe(el));
   }
-
   /* ---------- Animated stat counters ---------- */
   const statNums = document.querySelectorAll('.stat-num');
   const animateCount = (el) => {
@@ -58,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     requestAnimationFrame(step);
   };
-
   if (reduceMotion) {
     statNums.forEach(el => { el.textContent = el.dataset.count; });
   } else {
@@ -72,17 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.6 });
     statNums.forEach(el => statIo.observe(el));
   }
-
   /* ---------- Contact form (Web3Forms) ---------- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.textContent = 'Envoi en cours…';
-
     const formData = new FormData(form);
-
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -90,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         body: formData,
       });
       const result = await response.json();
-
       if (result.success) {
         status.textContent = 'Demande envoyée. Nous revenons vers vous sous 48h.';
         form.reset();
@@ -101,5 +90,4 @@ document.addEventListener('DOMContentLoaded', () => {
       status.textContent = "Une erreur s'est produite. Réessayez ou écrivez-nous directement.";
     }
   });
-
 });
